@@ -21,6 +21,7 @@ FileProcessor  :: readFile() {
 		std::istringstream iss(line);
 		std::string tempstr;
 		if (!(iss >> tempstr)) { break; } // error
+
 		fileParser.processInput(line);
 	
 	}

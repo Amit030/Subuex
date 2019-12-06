@@ -16,7 +16,7 @@ void FileParser::processInput( std::string input)
 
 	string intermediate;
 
-	// Tokenizing w.r.t. space ' ' 
+	// Tokenizing w.r.t. space ',' 
 	while (getline(check1, intermediate, ','))
 	{
 		tokens.push_back(intermediate);
@@ -24,8 +24,9 @@ void FileParser::processInput( std::string input)
 	string key = tokens[tokens.size() - 1];
 	auto it = m_callRegister.find(key);
 	if (m_callRegister.end() != it ) {
-	
-		m_callRegister.at(key).callStatuslist.push_back(tokens[tokens.size() - 2]);
+		string str = tokens[tokens.size() - 2];
+		str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
+		m_callRegister.at(key).callStatuslist.push_back(str);
 		m_callRegister.at(key).endTime= tokens[0];
 	}
 	else {
@@ -35,7 +36,9 @@ void FileParser::processInput( std::string input)
 		callDetail.destIP = tokens[2];
 		callDetail.callingParty = tokens[3];
 		callDetail.calledPart = tokens[4];
-		callDetail.callStatuslist.push_back(tokens[5]);
+		string str = tokens[5];
+		str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
+		 callDetail.callStatuslist.push_back(str);
 		callDetail.uniqueID = key;
 		m_callRegister.insert({ key, callDetail });
 	}
@@ -47,7 +50,7 @@ void FileParser::processInput( std::string input)
 void FileParser::printOutput()
 {
 	for (auto i : m_callRegister) {
-		cout << i.second.print()<<"\n\n\n";
+		cout << i.second.print() << endl;
 	}
 }
 
